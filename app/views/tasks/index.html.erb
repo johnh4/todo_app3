@@ -5,12 +5,16 @@
 	<%= f.submit "Add Task" %>
 <% end %>
 
-<h3>Incomplete Tasks</h3>
-<div id="incomplete_tasks">
-	<%= render @incomplete %>
-</div>
+<% if current_user %>
+	<h3>Incomplete Tasks</h3>
+	<div id="incomplete_tasks">
+		<%= render @incomplete %>
+	</div>
 
-<h3>Complete Tasks</h3>
-<div id="complete_tasks">
-	<%= render @complete %>
-</div>
+	<h3>Complete Tasks</h3>
+	<div id="complete_tasks">
+		<%= render @complete %>
+	</div>
+<% else %>
+	<p>Sign in or create an account to see tasks.</p>
+<% end %>

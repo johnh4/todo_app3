@@ -1,11 +1,13 @@
 class TasksController < ApplicationController
   def index
-  	@incomplete = Task.where(complete: false)
-  	@complete = Task.where(complete: true)
+    if current_user
+    	@incomplete = current_user.tasks.where(complete: false)
+      @complete = current_user.tasks.where(complete: true)
+    end
   end
 
   def create
-  	@task = Task.new(task_params)
+  	@task = current_user.tasks.new(task_params)
   	if @task.save
   		flash[:success] = "Task added succesfully"
   	else
@@ -15,7 +17,7 @@ class TasksController < ApplicationController
   end
 
   def update
-  	@task = Task.find(params[:id])
+  	@task = current_user.tasks.find(params[:id])
   	@task.update_attributes!(task_params)
   	respond_to do |format|
   		format.html { redirect_to tasks_path }
@@ -24,7 +26,7 @@ class TasksController < ApplicationController
   end
 
   def destroy
-  	@task = Task.find(params[:id])
+  	@task = current_user.tasks.find(params[:id])
   	@task.destroy
   	respond_to do |format|
   		format.html { redirect_to tasks_path }

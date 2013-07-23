@@ -1,5 +1,11 @@
 TodoApp3::Application.routes.draw do
+  get '/signup', to: 'users#new', as: 'signup'
+  get '/signin', to: 'sessions#new', as: 'signin'
+  get '/signout', to: 'sessions#destroy', as: 'signout'
+
   resources :tasks
+  resources :sessions
+  resources :users
 
   root to: "tasks#index"
   # The priority is based upon order of creation: first created -> highest priority.
